@@ -45,18 +45,20 @@ def user_dashboard(request):
     
     
     
-    url="https://newsapi.org/v2/top-headlines?country=in&apiKey=51b7bfb888d44e57a5fb21ab3f9bbeab"
-
-  
+    response=requests.request(url="https://api.nytimes.com/svc/topstories/v2/business.json?api-key=okTUDhrhmLwJ3uCzvlMhGQDz1UsuBpXY",method='GET')
     
-    news=[]
-    response = requests.request("GET", url)
-    print(response.text)
-    
-        
-        
+    news=json.loads(response.text)
 
-    # return render(request,'dashboard.html',{'news':news})
+   
+    
+
+        
+    
+    
+    news=list(news['results'])
+    
+
+    return render(request,'dashboard.html',{'news':news})
     
 def aboutus(request):
     return render(request,'aboutus.html')

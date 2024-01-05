@@ -1,32 +1,46 @@
 {% include 'index.html' %}
+
 <body>
     
     <div class="dashboard-container">
-       <div class="app-menu">
        
-
-
-       </div>
         
         <div class="news-section">
             <h2>Trending Business News</h2> 
             <div class="news-container">
+               
             
                 {% for n in news %}
+                    
+                    
                     <ul>
                         <li>
-                            <h4 class='heading'>{{n.name}}</h4>
-                            <img src="{{n.imageurl}}" style="width: 10%; height: 10%;">
-                            <p class='desc'>{{n.description}}</p>
-                            <a href='{{n.url}}'>Read Here</a>
-                        
+                            <a href="{{n.url}}" target="_blank"><h2>{{n.title}}</h2></a>
+                            <h3>{{n.abstract}}<h3>
+                            
+                            
+                            {% with image=n.multimedia.0 %}
+                                <a href="{{n.url}}"><img src="{{image.url}}" alt="{{image.caption}}"></a>
+                                <p style="font-size: small; text-align: center;">{{image.caption}}</p> 
+                                  
+                                
+                            {% endwith %}
+                            <!-- {% for i in n.multimedia %}
+                                <img src="{{i.url}}" alt="{{i.caption}}">  
+                                <p style="font-size: small;">{{i.caption}}</p> 
+                                <p>{{i}}</p>                     
+                            {% endfor %} -->
+
+                            <a href={{n.url}} target="_blank" style="text-decoration: underline;">Read Here</a>
+                            
+                            <br>
     
                         </li>
     
                         
                         
                     </ul>
-                {% endfor %}
+                {% endfor %} 
                 
             </div>
 
@@ -43,7 +57,7 @@
             background-position: center;
             background-size: contain;
             
-            padding: 1% 0% ;
+            padding: 2% 0% ;
         }  
         .app-menu{
             width: 200px;
@@ -54,25 +68,28 @@
         }
         
         .news-section{
-            margin: 15% 2%;
+            margin: 1% 10%;
         }
         .news-container{
-            width: 70vw;
-            height: 70vh;
-            
+            width: 80vw;
+            height: 80vh;
+           
             overflow-y: auto;
-            margin: 0% 15%;
-            background-color: white;
-            padding: 2%;
+            color: white;
+            background-color: rgb(0, 0, 0);
+        
             
         }
         .news-section h2{
             text-align: center;
             position: sticky;
             top:0;
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.789);
+            color: black;
             font-family: 'Cinzel', serif;
-            font-size: 3rem;
+            font-size: 2rem;
+            backdrop-filter: blur(7px);
+           
             
             
             border-radius: 100px;
@@ -82,20 +99,23 @@
             margin-top: 5%;
 
         }
+        .news-container ul li img{
+            width: 80%;
+            margin-left: 10%;
+            height: 40%;
+        }
         .news-container ul li a{
             text-decoration: none;
-            border: 1px solid #695aa6;
-            padding: 1.7%;
-            border-radius: 70px;
+           
 
         }
-        .news-container ul li a:hover{
+        /* .news-container ul li a:hover{
             
             background-color:  #695aa6;
             color: white;
             
 
-        }
+        } */ 
         .news-container ul li .heading{
             font-size:2.7em;
             font-family: 'Playfair Display', serif;
