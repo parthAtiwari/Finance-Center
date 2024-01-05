@@ -1,0 +1,12 @@
+Name,Amount,Description,CashFlowType
+Grocery,5000,Grocery for Dec.,E
+Grocery,5000,Grocery for Dec.,E
+Stationary,2000,books and magazines,E
+Stationary,2000,books and magazines,E
+Bike,100000,Bike for me,E
+FD,70000,SBI FD,S
+Car,7000000,BMW for me,S
+Car,700000,BMW for me,E
+Travel,17000,Travel to Mumbai,E
+Seminar Travel,7000,Seminar in Delhi,E
+RD,17000,RD in BOB,S

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="/static/assets/fclogo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Center</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.css" integrity="sha512-5xCeY1Hd85tDJYzQHzhlOk+yeSSkudSWW6Rn/sFXOcJOA6HtaxXEDTBQQ8k+c+72SGlqgH89AT8CplRZEc2Tgg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Raleway&family=Aboreto&family=Cinzel&family=Megrim&family=Tilt+Prism&family=Allura&family=Caveat&family=Inspiration&family=Cormorant+SC&family=Poiret+One&family=Playfair+Display&family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.min.css" integrity="sha512-L3+AcwWGUjWF+LY7LXfg5f8T3upGTV6dgRbwraC/KbBCuriSoI1jCaw9e3HW13VXQ23M5PDKTwz9/kW+OPZ14Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+ 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+</head>
+<body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.min.js" integrity="sha512-a1HFA1NIciHH1JtCbf7DS4zAK6FxUsmnXSIEfPm75d3vgPVfaVeVQbKcX7iqqvyp4kTUtqWB+Z7/4S8QhIqXbw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-dropdown/2.0.3/jquery.dropdown.js" integrity="sha512-WyzsFKzpBntMo8bKzml4FzM/l3u34gjBDbCqNpzP/VxxeZn7dd2340oONeR3n6ZZ+A4XCGnr7U4P7l9EPo1yPQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <div class="header">
+
+        <a href="/" style="margin-right: auto;"> <img src="/static/assets/fclogo.png"></img></a>
+        
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+    
+                <li><a href="/aboutus">About Us</a></li>
+                <li><a href="/developer-contact">Contact</a></li>
+                
+            </ul>
+
+        </nav> 
+        
+        <div class="w3-dropdown-hover">
+
+        
+            <button class="w3-button" ><i class="fa fa-user-circle-o fa-2x"><br>{{request.user.username}}</i></button>
+            <div class="w3-dropdown-content w3-bar-block w3-card-4" >
+                {% if not request.user.is_authenticated %}
+                    <a class="w3-bar-item w3-button" href="/auth">Login/Register</a>
+
+                {% else %}
+                    <a class="w3-bar-item w3-button" href="/dashboard">Dashboard<img style="width: 27%; height: 27%;" src="/static/assets/speedometer.gif"></img></a>
+                    <a class="w3-bar-item w3-button" href="/profile">Profile <img style="width: 27%; height: 27%;" src="/static/assets/account.gif"></img></i></a>
+                    <a class="w3-bar-item w3-button" href="/my-finance">My Finance <img style="width: 27%; height: 27%;" src="/static/assets/money-bag.gif"></img></a>
+                    <a class="w3-bar-item w3-button" href="#">My Taxes <img style="width: 27%; height: 27%;" src="/static/assets/tax.gif"></img></a>
+                    <a class="w3-bar-item w3-button" href="#">Investments<img style="width: 27%; height: 27%;" src="/static/assets/growing.gif"></img></a>
+                    <a class="w3-bar-item w3-button" href="/stockmarket">Stock Market<img style="width: 27%; height: 27%;" src="/static/assets/line-chart.gif"></img></a>
+                    <a class="w3-bar-item w3-button" href="/auth/logout">Logout<img style="width: 27%; height: 27%;" src="/static/assets/logout.gif"></img></a>
+                    
+                    
+                {% endif %}
+                
+                
+            </div>
+        </div>
+        
+        <!-- <div class="btn-group open">
+            <a class="btn btn-primary" href="#"><i class="fa fa-user fa-fw"></i> User</a>
+            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#">
+            <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#"><i class="fa fa-pencil fa-fw"></i> Edit</a></li>
+                <li><a href="#"><i class="fa fa-trash-o fa-fw"></i> Delete</a></li>
+                <li><a href="#"><i class="fa fa-ban fa-fw"></i> Ban</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="fa fa-unlock"></i> Make admin</a></li>
+            </ul>
+        </div> -->
+        
+
+    </div>
+
+    {% for message in messages %}
+        <h1 class='{{message.tags}}'>{{message}}</h1>
+    {% endfor %}
+
+   
+    <style>
+        .header {
+            background:transparent;
+            z-index: 5000;
+            position: sticky;
+            top:0;
+            height:17vh;
+            backdrop-filter: blur(7px);
+            margin: 0;
+            color: black;
+            display: flex;
+            flex-wrap: wrap;
+            background-color:rgb(255,255,255,0.7);
+        
+            
+            
+        }
+        
+        .header a img{
+            height: 17vh;
+            border:2px solid aquamarine;
+            border-radius: 100%;
+            display: inline-block;  
+
+            
+            
+
+
+        }
+        .header a img:hover{
+            opacity: 0.9;
+          
+        }
+        
+        body{
+            background-color: white;
+            width: 100%;
+            margin: 0;
+            
+            
+        }
+        button[type='submit']{
+            color: white;
+            height:7vh;
+            width: 15vw;
+            text-align: center;
+            margin-top: 2%;
+            margin-left: 2%;
+            cursor: pointer;
+            
+            background-color:#695aa6;
+            
+            border: 0px;
+            /* background-color: rgb(55, 170, 124); */
+            
+        }
+        button[type='submit']:hover{
+            
+            transform: scale(0.9);
+            opacity: 0.7;
+        }
+        html{
+            scroll-behavior: smooth;
+        }
+        .header nav{
+        
+            text-align: right;
+            flex-wrap: wrap;
+
+
+            
+        }
+        header nav ul{
+            flex: 1;
+            margin-left: 0;
+            /* align-items: right; */
+            padding-right: 2vw;
+           
+            
+            
+
+        }
+        .header ul li{
+            
+            
+            text-align: right;
+            list-style: none;
+            margin:0 0.2vw;
+            
+            display: inline-block;
+            align-items: right;
+            
+            
+            
+            
+            
+
+        }
+        .header ul li a{
+            
+            text-decoration:none;
+            letter-spacing: 1px;
+            color: black;
+            font-size: 17px;
+            padding: 10px 7px;
+            float: right;
+            
+    
+        }
+        .header ul li a:hover{
+            text-transform: uppercase;
+            font-size: 15px;
+            
+            background-color:#695aa6; 
+            color: white;
+            
+        
+        } 
+        .header .w3-dropdown-hover{
+            margin-right: 4%;
+        }
+
+        .error{
+
+            background-color:rgb(255, 110, 110);
+            width:100vw;
+            color:white;
+            margin-top:0;
+            font-family:'Quicksand',serif;
+        }
+
+         .success{
+            background-color:rgb(87, 255, 202);
+            width: 100vw;
+            color:white;
+            margin-top:0;
+        }
+    </style>
+    
+    
+</body>
+
+
+
+</html>

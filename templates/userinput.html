@@ -1,0 +1,109 @@
+{% include 'index.html' %}
+<body>
+    <h2>Add your Data Here</h2>
+    <div id='userinput-container'>
+        
+        <form method="POST" action="saveinfo/" id="userinput">
+            {% csrf_token %}
+
+            
+        </form>
+        <div class="button-area"><button onclick="addInputs()">+</button></div>
+        
+    </div>
+  
+
+    
+   
+    <script>
+        function addInputs() {
+            // Create three new input elements
+            var name = document.createElement("input");
+            name.type = "text";
+            name.placeholder='Name'
+            name.name='name'
+            var desc= document.createElement("input");
+            desc.type = "text";
+            desc.placeholder='Description'
+            desc.name='desc'
+            var amount= document.createElement("input");
+            amount.name='amount'
+            amount.type='number'
+            amount.placeholder="Amount"
+            amount.min=0
+            amount.step=1
+            var cashflowtype = document.createElement("select")
+            cashflowtype.name='cashflowtype'
+            var dummy= document.createElement("option");
+            dummy.text = "none";
+            dummy.value='none'
+            var expense= document.createElement("option");
+            expense.text = "Expense";
+            expense.value='E'
+            var saving = document.createElement("option");
+            saving.text = "Saving";
+            saving.value='S'
+            cashflowtype.add(dummy);
+            cashflowtype.add(expense);
+            cashflowtype.add(saving);
+            
+            var submitButton = document.getElementById("submitButton");
+            if (submitButton) {
+                submitButton.remove();
+
+            }
+
+		    // Remove the submit button from the DOM
+		    
+            // Append the new input elements to the inputs div
+            var inputform= document.getElementById("userinput");
+            inputform.appendChild(name);
+            inputform.appendChild(amount);
+            inputform.appendChild(desc);
+            inputform.appendChild(cashflowtype);
+            
+            const submitBtn = document.createElement("button");
+            submitBtn.type = "submit";
+            submitBtn.id='submitButton'
+            submitBtn.innerText = "Save";
+
+            inputform.appendChild(submitBtn);
+        }
+    </script>
+
+
+    <style>
+        #userinput-container{
+            width: 70vw;
+            margin: 0 15vw;
+            
+        }
+        #userinput-container input {
+            margin:2% 2%;    
+        }
+        #userinput-container input {
+            width: 25%;
+            height: 6vh;
+            border: 1px solid #5e46a7;
+            font-size: 1rem;
+        }
+        .button-area button{
+            margin: 1% 45%;
+            background-color: whitesmoke;
+            color: black;
+            border: 2px solid grey;
+            border-radius: 100%;
+            
+            width:50px;
+            height: 50px;
+            font-size: 2rem;
+            cursor: pointer;
+
+        }  
+        h2{
+            text-align:center;
+        }
+        
+    </style>
+</body>
+{% include 'footer.html' %}

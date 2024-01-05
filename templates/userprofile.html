@@ -1,0 +1,180 @@
+<title>{{name}}</title>
+
+{% include 'index.html'  %}
+
+<body>
+    
+    <div class="wish">
+        
+        {% if birthday  %}
+           <p>Happy Birthday {{user.first_name}} ! &#127881</p>
+            
+        {% endif %}
+
+    </div>
+    <div class="container">
+        <div class="radial-bg-user"><img src={{user_pic}} alt="picture"> </div>
+       
+        <h2>{{name}}</h2>
+        <p>@{{username}}</p>
+
+    
+    
+       
+        <ul>
+            {% for key,value in profile %}
+           
+                <li>
+                    <h4><strong>{{key}}</strong></h4>
+                    <p>{{value}}</p>
+                </li>
+            {% endfor %}
+        </ul>
+     
+        <a href="/auth/editdetails">Edit Details</a>
+    
+    </div>
+
+
+    
+        
+
+    <style>
+        .container p{
+            text-align: center;
+            margin-top: 0;
+            font-family: 'Raleway',serif;
+        }
+        
+        .container{
+            
+            
+            width: 80%;
+            margin: 0% 10%;
+            background-color:whitesmoke;
+            
+            padding: 1%;
+
+        }
+        .container img{
+            margin:5%;
+            width: 90%;
+            height: 90%;
+            border-radius: 100%;
+            
+        }
+        .container h2{
+            text-align: center;
+            font-family: 'Raleway',serif;
+        }
+        .container ul{
+          
+            
+            margin-right: 0;
+            align-items: left;
+            padding-right: 2vw;
+
+        }
+       
+        .container ul li {
+            
+            
+            text-align: left;
+            list-style: none;
+            margin:2% 0.2vw;
+            
+            
+            
+            
+            
+            
+            
+
+        }
+        .container ul li h4{
+            font-family: 'Cormorant SC',serif;
+            font-weight: 200;
+
+        }
+        .container ul li p{
+            text-align: left;
+            font-family: Raleway,sans-serif;
+            font-size: 2vw;
+            border: 1px solid #695aa6;
+            border-radius: 70px;
+            padding: 1%;
+            
+            
+        }
+        .container  a{
+            text-decoration: none;
+            border: 1px solid black;
+            font-size: 2vw;
+            font-family: "Raleway",sans-serif;
+            padding: 1%;
+            margin-right: 0;
+            color:black;
+
+        }
+        .container a:hover{
+            background-color: #695aa6;
+            color: white;
+            border-color: white;
+        }
+        .wish{
+            
+            /* width: auto; */
+            text-align: center;
+            position: fixed;
+            animation: slide-in 4000ms;
+          
+            
+
+        
+            
+        }
+        @keyframes slide-in {
+            from {
+            transform: translateX(-100%);
+            }
+            to {
+            transform: translateX(0%);
+            }
+        }
+
+
+        .wish p{
+            font-family:'Inspiration',cursive ;
+            /* text-align: center; */
+            font-size: 3em;
+            color:white;
+            font-weight: 500;
+            background-color: rgb(255, 165, 135);
+            margin-top: 0;
+            
+            
+        }
+        .radial-bg-user{
+            margin: 0 41%;
+            width:150px;
+            height:150px;
+            border-radius: 100%;
+            background-image: linear-gradient(35deg,aquamarine,rgb(132, 50, 255));
+           
+        }
+        .radial-bg-user img{
+            border-radius: 100%;
+            width: 90%;
+            height: 90%;
+            margin: 5%;
+            
+            
+        }
+        .radial-bg-user img:hover{
+            transform: scale(1.15)
+        }
+       
+    </style>
+   
+</body>
+{% include 'footer.html' %}

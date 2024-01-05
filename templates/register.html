@@ -1,0 +1,201 @@
+<title>Finance Center Register</title>
+{% include 'index.html' %}
+<body>
+    <div class="signup-container">
+        <h2> Finance Center </h2>
+        {% if request.user.is_anonymous  %}
+            <h3>Register Or <a href="/auth/login">Login</a></h3>
+        {% else %}
+            <h3>Edit Your Details Or go to <a href="/profile">Profile</a></h3>
+        {% endif %}
+            
+        
+        <div class="registrationform">
+            {% if request.user.is_anonymous %}
+                <form method="POST" action="/auth/register/validate/" enctype="multipart/form-data">
+            {% else %}
+                <form method="PATCH" action="/auth/editdetails/validate/" enctype="multipart/form-data">
+            {% endif %}
+            
+                {% csrf_token %}
+                
+                    <ul>
+                        <li>
+                            <label for="email">Email</label><br>
+                            <input type="email" id="email" name="email" placeholder='Email' value={{user.email}}><br>
+                        </li>
+                        <li>
+                            <label for="first_name">First name</label><br>
+                            <input type="text" id="first_name" name="first_name" placeholder='First Name' value={{user.first_name}}><br>
+
+                        </li>
+                        <li>
+                            <label for="last_name">Last name</label><br>
+                            <input type="text" id="last_name" name="last_name" placeholder='Last Name' value={{user.last_name}}><br>
+
+                        </li>
+                        <li>
+                            <label for="username">Username</label><br>
+                            <input type="text" id="username" name="username" placeholder='Username' value={{user.username}}><br>
+
+                        </li>
+                        <li>
+                            <label for="password">Create Password</label><br>
+                            <input type="password" id="password" name="password" placeholder='Password'><br>
+                        </li>
+                        <li>
+                            <label for="confirmpassword">Confirm Password</label><br>
+                            <input type="password" id="confirmpassword" name="confirmpassword" placeholder='Confirm your password'><br>
+                        </li>
+                        <li>
+                            <label for="date_of_birth">Date of Birth</label><br>
+                            <input type="date" id="date_of_birth" name="date_of_birth" placeholder='YYYY-MM-DD'><br>
+                        </li>
+                        <li>
+                            <input type="radio" id="M" name="gender" value="M">
+                            <label for="M">Male</label><br>
+                        </li>
+                        <li>
+                            <input type="radio" id="F" name="gender" value="F">
+                            <label for="F">Female</label><br>
+        
+
+                        </li>
+                        <li>
+                            <label for="profile_pic">Profile Picture</label><br>
+                            <input type="file" name="profile_pic">
+                        </li>
+                    </ul>
+                    
+        
+                    <button type="submit" name="btn" >Save</button>
+                    
+                    
+            </form>
+        </div>
+    </div>
+        <style>
+            body{
+                background-image: url('/static/assets/financecenterhome.jpg');
+                /* background-image: url('/static/assets/registration.jpg');
+                background-position: center;
+                background-size: cover; */
+                
+            }
+            .signup-container{
+            width: 80%;
+           
+            margin: 10% 10%;
+            background-color:whitesmoke;
+            top:0;
+            color:rgb(0, 0, 0);
+            border: 1px solid gray;
+            
+            }
+
+        
+            .signup-container h2{
+                text-align: center;
+                font-family: Raleway,sans-serif;
+                font-size: 5vw;
+                
+            
+            }
+            .signup-container h3{
+                text-align: center;
+                font-family:'Raleway', sans-serif;
+                margin-top: 5%;
+                font-size: 2vw;
+            }
+            .signup-container h3 a{
+                text-decoration: none;
+                border: 1px solid black;
+                font-size: 2vw;
+                font-family: "Raleway",sans-serif;
+                padding: 1.2%;
+                color:black;
+
+            }
+            .signup-container h3 a:hover{
+                background-color: #695aa6;
+                color: white;
+                border-color: white;
+            }
+            .registrationform{
+                margin-left: 10%;
+                margin-top: 15%;
+            }
+
+        
+
+            
+            .registrationform ul{
+                
+                flex: 1;
+                margin-right: 0;
+                align-items: left;
+                padding-right: 2vw;
+            
+            
+            }
+            
+            ul li{
+                
+                
+                text-align: left;
+                list-style: none;
+                margin:2%;
+                
+                display: inline-block;
+                align-items: left
+
+            }
+            ul li input{
+                height: 7vh;
+                width: 100%;
+                display: inline-block;
+                margin-top: 2%;
+                border: 1px solid black;
+                
+            
+                
+            }
+            ul li label{
+                color:rgb(0, 0, 0);
+                font-size: 20px;
+                font-family: "Cormorant Sc",serif;
+            }
+            button{
+                color: black;
+                height:7vh;
+                width: 15vw;
+                text-align: center;
+                margin-top: 2%;
+                cursor: pointer;
+                margin-left: 5%;
+                font-family: "Raleway",serif;
+                
+                border: 1px solid black;
+                
+                /* background-color: rgb(55, 170, 124); */
+                
+            }
+            button:hover{
+                
+                transform: scale(0.9);
+                opacity: 0.7;
+                background-color: #695aa6;
+                color: white;
+                border-color: white;
+            }
+                    
+                  
+        </style>
+    
+    
+                
+                
+            
+
+</body>
+{% include 'footer.html' %}

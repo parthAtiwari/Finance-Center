@@ -1,0 +1,230 @@
+{% include 'index.html' %}
+<body>
+    <div class="marketheader">
+
+            
+        <ul>
+            <li><a href="/stockmarket">Watchlist</a></li>
+            <li><a href="gainers">Gainers</a></li>
+            <li><a href="losers">Losers</a></li>
+            <li><a href="mostactive">MostActive</a></li>
+            
+            
+            
+        </ul>
+    </div>
+    
+    <div class="market-container"> 
+        
+
+    
+        
+        {% if watchlist %}
+            <h4>Watchlist curated for you, {{user.first_name}}!</h4>
+        
+
+            <div class="watchlist">
+                    
+                    <table>
+                        <tr>
+                            {% for c in watchlist.columns %}
+                            
+                                <th>{{c.capitalize}}</th>
+                            
+                            {% endfor %}
+                        </tr>
+                        {% for d in watchlist.data %}
+                            <tr>
+                                {% for val in d %}
+                                    <td>{{val}}</td>
+                                {% endfor %}
+                                    
+                                
+                            </tr>
+                        {% endfor %}
+
+                        
+                    </table>
+        
+
+            </div>
+        {% endif %}
+        <div class='daysummary'>
+            
+            {% if gainers %}
+
+                <h4>Day Gainers</h4>
+                <table>
+                            
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Change</th>
+                        <th>Volume</th>
+                        <th>Chart</th>
+                    </tr>
+                    {% for g in gainers %}
+                        <tr>
+                            <td>{{g.symbol}}</td>
+                            <td style="color: rgb(0, 255, 0);">+{{g.change}} %</td>
+                            <td>{{g.volume}}</td>
+                            <td><a href="https://in.tradingview.com/chart/CkEEwN5b/?symbol={{g.symbol}}" target=”_blank”>Chart</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                    
+            {% endif %}
+
+            {% if losers %}
+                
+                    
+                <h4>Day Losers</h4>
+                <table>
+                            
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Change</th>
+                        <th>Volume</th>
+                        <th>Chart</th>
+                    </tr>
+                    {% for l in losers%}
+                        <tr>
+                            <td>{{l.symbol}}</td>
+                            <td style="color: rgb(198, 30, 30);">{{l.change}} %</td>
+                            <td>{{l.volume}}</td>
+                            <td><a href="https://in.tradingview.com/chart/CkEEwN5b/?symbol={{l.symbol}}" target=”_blank”>Chart</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                    
+            {% endif %}
+
+            {% if volume_gainers %}
+                
+                <h4>Volume Gainers</h4>
+                <table>
+                            
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Volume</th>
+                        <th>Chart</th>
+                    </tr>
+                    {% for v in volume_gainers%}
+                        <tr>
+                            <td>{{v.symbol}}</td>
+                            <td>{{v.volume}}</td>
+                            <td><a href="https://in.tradingview.com/chart/CkEEwN5b/?symbol={{v.symbol}}" target=”_blank”>Chart</a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+                    </li>
+            {% endif %}
+
+                
+
+        </div>
+    </div>
+    <style>
+        .market-container{
+            width: 100vw;
+         
+            background-image: url('/static/assets/stockchart.jpg');
+            background-position: center;
+            background-size: cover;
+            color: white;
+            padding: 2%;
+            margin-top:0;
+            
+         
+        }
+    
+        .marketheader{
+            width: 100%;
+            padding: 1%;
+            background-color: #695aa6;
+            color:white;
+            top: 17vh;
+            position: sticky;
+        }
+        .marketheader ul{
+            display: flex;
+            
+            
+        }
+        .marketheader ul li {
+            list-style: none;
+            letter-spacing: 2px;
+            margin-left:5%;
+            align-items: left;
+            padding: 1%;
+            
+            
+
+        }
+        .marketheader ul li a{
+            text-decoration: none;
+            border: 1px solid white;
+            border-radius: 100px;
+            padding: 1vw;
+
+            
+        }
+        .watchlist{
+            width: 100vw;
+            
+        }
+       
+        .daysummary{
+            width: 90vw;
+            margin:2vw 5vw;
+            
+        }
+        
+        
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 80%;
+            /* border:1px solid grey; */
+            margin:0.5% 10%;
+            font-size: 15px;
+            
+        }
+        table th,td{
+            padding:2% 2%;
+        }
+        table tr{
+           
+           box-shadow: 0px 1px 2px 0 whitesmoke;
+           
+        }
+        table tr:hover{
+           
+           box-shadow: 0px 2px 7px 2px whitesmoke;
+          
+        }
+        table tr td a{
+            text-decoration: none;
+            border: 1px solid #695aa6;
+            padding: 0.5vw 1vw;
+            border-radius: 40px;
+            
+        }
+        table tr td a:hover{
+            background-color: #695aa6;
+            color:white;
+            
+        }
+       
+       h4{
+        font-family:"Cinzel",serif;
+        text-align: center;
+        font-size:35px;
+        
+        border-radius: 70px;
+       }
+       
+    </style>
+
+    
+</body>
+{% include 'footer.html' %}

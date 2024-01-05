@@ -1,0 +1,125 @@
+{% include 'index.html' %}
+<body>
+    <div class="container",id='container'>
+        <h2>Finance Center<br><a href="/" style="margin-right: auto;"> <img src="/static/assets/fclogo.png"></img></a></h2>
+        
+            <div class='insider-container'>
+                
+                    
+                
+                {% if request.user.is_anonymous %}
+                
+                    <ul>
+                        <li>
+                            <a href="/auth/register" class="btn">Register</a>
+                        </li>
+                        <li>
+                            <a href="/auth/login"  class="btn">Login</a>
+                        </li>
+                    </ul>
+                {% endif %}
+                
+            </div>
+
+        
+    </div>
+
+    
+    
+    
+    <style>
+        .insider-container{
+            width: 60%;
+            margin: 2% 20%;
+            top:0;
+           
+            
+         
+            
+            
+        }
+        .container h2{
+            text-align:center;
+            font-family: Raleway,sans-serif;
+            font-size: 10vw;
+            margin-top: 0;
+            font-weight: 800;
+            color: rgb(218, 218, 218);
+            
+            
+            
+        
+        }
+        .insider-container ul li{
+            list-style: none;
+            margin: 5%;
+            display: inline-block;
+            align-items: left;
+        }
+        .insider-container ul li a{
+            text-decoration: none;
+            border: 1px solid white;
+            color :white;
+            font-size: 2vw;
+            font-family: "Raleway",sans-serif;
+            padding: 20%;
+            text-align: center;
+            
+            
+
+        }
+        .insider-container  ul li a:hover{
+            background-color: #6100b5;
+            color: white;
+            border-color: white;
+        }
+        
+        .header a img{
+            animation: drop-in 2000ms;
+            
+        }
+        @keyframes drop-in {
+            from {
+            transform:
+                rotate(-30deg) translateY(-100%);
+            opacity: 0;
+            }
+            to {
+            transform:
+                rotate(0deg) translateY(0%);
+            opacity: 1;
+            }
+        }
+        .container a img{
+            width:20%;
+            height: 20%;
+            border:2px solid aquamarine;
+            border-radius: 100%;
+            display: inline-block;  
+            
+            
+
+            
+            
+
+
+        }
+        .container  a img:hover{
+            opacity: 0.9;
+          
+        }
+        .container{
+            width: 100vw;
+            
+            margin-top:0;
+            background-image: url('/static/assets/financecenterhome.jpg');
+            background-position: center;
+            background-size: cover;
+            padding: 7% 2% ;
+            
+            
+        }
+    </style>
+    
+</body>
+{% include 'footer.html' %}

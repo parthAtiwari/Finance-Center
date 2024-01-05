@@ -1,0 +1,109 @@
+<title>Finance Center Login</title>
+{% include 'index.html' %}
+
+<body>
+    <div class="login-container">
+        <h2> Finance Center </h2>
+        <h3>Login Or <a href="/auth/register">Register</a></h3>
+        <img  style="width: 20%; height: 20%; margin-left:35% ; margin-top: 5%;" src="/static/assets/login-.gif"></img>
+        <div class="loginform">
+            <form method="POST" action="/auth/login/authenticate/">
+                {% csrf_token %}
+                
+    
+    
+    
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" placeholder='Username'><br>
+    
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" placeholder='Your Password'><br>
+               
+                
+                
+    
+                <button type="submit" name="btn" >Login</button>
+                
+                
+            </form>
+        </div>
+        
+
+    </div>
+    
+
+    <style>
+        body{
+            /* background-image:url('/static/assets/loginbanner.jpg');
+            background-position: center; */
+            background-size: cover;
+            background-color: white;
+            background-image: url('/static/assets/financecenterhome.jpg');
+            margin:0;
+            
+            
+        }
+        .login-container{
+            width: 60%;
+           
+            margin: 15% 20%;
+            background-color: whitesmoke;
+            top:0;
+            color:rgb(0, 0, 0);
+            border: 1px solid gray;
+            
+        }
+        .login-container h2{
+            text-align: center;
+            font-family: Raleway,sans-serif;
+            font-weight: 500;
+            font-size: 5vw;
+            
+        
+        }
+        .login-container h3{
+            text-align: center;
+            font-family:'Raleway', sans-serif;
+            margin-top: 5%;
+            font-size: 2vw;
+        }
+        .login-container h3 a{
+            text-decoration: none;
+            border: 1px solid black;
+            font-size: 2vw;
+            font-family: "Raleway",sans-serif;
+            padding: 1.2%;
+            color:black;
+
+        }
+        .login-container h3 a:hover{
+            background-color: #695aa6;
+            color: white;
+            border-color: white;
+        }
+
+        .loginform{
+            margin-left: 30%;
+            margin-top: 5%;
+        }
+
+        input{
+            height: 7vh;
+            width: 70%;
+            border: 1px solid black;
+           
+            
+        }
+        label{
+            
+            
+            font-size: 20px;
+            font-family: "Cormorant Sc",serif;
+        }
+        
+    </style>
+    
+</body>
+{% include 'footer.html' %}
+
+

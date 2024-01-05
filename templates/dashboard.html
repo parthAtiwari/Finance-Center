@@ -1,0 +1,127 @@
+{% include 'index.html' %}
+<body>
+    
+    <div class="dashboard-container">
+       <div class="app-menu">
+       
+
+
+       </div>
+        
+        <div class="news-section">
+            <h2>Trending Business News</h2> 
+            <div class="news-container">
+            
+                {% for n in news %}
+                    <ul>
+                        <li>
+                            <h4 class='heading'>{{n.name}}</h4>
+                            <img src="{{n.imageurl}}" style="width: 10%; height: 10%;">
+                            <p class='desc'>{{n.description}}</p>
+                            <a href='{{n.url}}'>Read Here</a>
+                        
+    
+                        </li>
+    
+                        
+                        
+                    </ul>
+                {% endfor %}
+                
+            </div>
+
+        </div>
+        
+        
+    </div>
+
+    <style>
+        .dashboard-container{
+            width: 100vw;
+            margin-top:0;
+            background-image: url('/static/assets/dashboard.jpg');
+            background-position: center;
+            background-size: contain;
+            
+            padding: 1% 0% ;
+        }  
+        .app-menu{
+            width: 200px;
+            height: 200px;
+            margin: 0 40%;
+            border-radius: 100%;
+            background-image: linear-gradient(180deg,rgb(67, 250, 174),rgb(38, 255, 251));
+        }
+        
+        .news-section{
+            margin: 15% 2%;
+        }
+        .news-container{
+            width: 70vw;
+            height: 70vh;
+            
+            overflow-y: auto;
+            margin: 0% 15%;
+            background-color: white;
+            padding: 2%;
+            
+        }
+        .news-section h2{
+            text-align: center;
+            position: sticky;
+            top:0;
+            background-color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            
+            
+            border-radius: 100px;
+        }
+        .news-container ul li{
+            list-style: none;
+            margin-top: 5%;
+
+        }
+        .news-container ul li a{
+            text-decoration: none;
+            border: 1px solid #695aa6;
+            padding: 1.7%;
+            border-radius: 70px;
+
+        }
+        .news-container ul li a:hover{
+            
+            background-color:  #695aa6;
+            color: white;
+            
+
+        }
+        .news-container ul li .heading{
+            font-size:2.7em;
+            font-family: 'Playfair Display', serif;
+
+
+        }
+        .news-container ul li .desc{
+            font-family: 'Raleway',serif;
+            font-size: 1em;
+        }
+        .user-FCRecord{
+            margin: 2% 10%;
+        }
+        /* .app-menu .menu-items ul{
+            display: flex;
+            flex: 1;
+        } */
+       
+        
+        .app-menu .menu-items ul li {
+          
+           list-style: none;
+            
+        }
+    </style>
+</body>
+{% include 'footer.html' %}
+
+</html>

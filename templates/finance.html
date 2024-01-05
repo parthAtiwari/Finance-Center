@@ -1,0 +1,477 @@
+{% include 'index.html' %}
+<body>
+    <div class="financial-container">
+        
+        <h2>Your Stats</h2>
+        
+        
+        
+        <div class="data-charts">
+            
+            <ul>
+
+            
+                
+                <li>
+                    <h3>Your {% now "M" %} Expenses</h3>
+                    <canvas id="monthlyexpenses-chart" class="chart"></canvas>
+                </li>
+                <li>
+                    <h3>Your {% now "M" %} Savings</h3>
+                    <canvas id="monthlysavings-chart" class="chart"></canvas>
+                </li>
+                <li>
+                    <div class="target-box">
+                        <div class="goal-circle" style="border: 4px solid aqua  ;">
+                            {% if mysavings > goal %}
+                                <h3 style="margin: 25%;">Goal Achieved<br>{{goal}}</h3>
+                               
+                            {% else %}
+                                <p>Saved <br>{{mysavings}}<br> out of</p>
+                                <h3>{{goal}}</h3>
+                            {% endif %}
+                           
+                        </div>
+                      
+                        <h5 style="font-size: 1.7rem;">Set Your {% now "M" %} Savings Target</h5>
+                        <form method="POST" action="save-goal/" id="goal-input">
+                            {% csrf_token %}
+                            
+                            <input type="number" id="saving-goal;" name="saving-goal" placeholder='Enter Amount' min="1.0"><br>
+                            <button type="submit" id="btn">Save</button>
+                        </form>
+                        {% if mysavings > goal %}
+                            <p style="color:rgb(1, 7, 92);">Hey! You did it.You saved {{mysavings}} this month, Your Saving goal is achieved, Set the higher Goal</p>
+                        {% else %}
+                            <p style="color: black;"> Keep Saving :)<p>
+                        {% endif %}
+                        <p style="color: rgb(242, 143, 143);">*You can't Decrease the Saving Goal amount Once saved</p>
+                    </div>
+                </li>
+            </ul>
+
+            
+        </div>
+        <h2>Your Analytics</h2>
+        <div class="stats-div">
+            
+            <ul>
+
+                <li style="background-color: #835ba77a;">
+                    <canvas id="stats-chart" class="chart"></canvas>
+
+                </li>
+             
+            </ul>
+       
+        </div>
+        <div class="analytics">
+            <ul>
+                <li>
+                    <h3>Your Savings Fluctuations</h3>
+                    <canvas id="analytics-chart-line" class="chart"></canvas>
+        
+    
+                </li>
+
+          
+
+                <li>
+                    <div class="data-insights-card">
+                        <h3>Data Insights</h3>
+                        <ul>
+                            <li>
+                                <p> {{count}} times your expenses exceeded savings in last 12 Months.</p>
+
+                            </li>
+                            
+                            
+                            <!-- {% for i in 'abcdefghijkl'  %}
+                                <div class="rectangle" style="background-color: aquamarine ; opacity: 1;"></div>
+                            {% endfor %} -->
+                            
+                            
+                           
+                        </ul>
+                       
+
+                    </div>
+                    
+                </li>
+            </ul>
+        </div>
+        
+        
+      
+       
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.4/d3.min.js" integrity="sha512-nfUlp2ZWPKWlnAH/OsMeAqRSYBxOdPYeBXwceyw6QqqZ7uTT/s5/eS1hMKphjVBouk0jf/JQ8ULVJRnEqSHkXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            
+            <script>
+                // const chart_data='/media/csv/{{request.user.username}}/current_stats/{{request.user.pk}}/monthlystats.csv';
+               
+                {% comment %} var myarray='{{expenses.Name|escapejs}}';
+                console.log(myarray); {% endcomment %}
+                
+                var expenses={'Name':[],'Amount':[],'description':[]};
+                var savings={'Name':[],'Amount':[]}; 
+                var monthstats={'Name':[],'Amount':[]}; 
+                expenses['Amount']=JSON.parse('{{ expenses.Amount|escapejs }}');
+                savings['Amount']=JSON.parse('{{ savings.Amount|escapejs }}');
+                
+                {% for sav_name in savings.Name %}
+                    savings['Name'].push('{{sav_name}}');
+                {% endfor %}
+                {% for ex_name in expenses.Name %}
+                    expenses['Name'].push('{{ex_name}}');
+                {% endfor %}
+
+                
+               
+
+                const chart_expense = document.getElementById('monthlyexpenses-chart');
+                const chart_savings = document.getElementById('monthlysavings-chart');
+                const chart_stats=document.getElementById('stats-chart');
+               
+            
+                new Chart(chart_expense, {
+                type: 'doughnut',
+                data: {
+                    labels: expenses['Name'],
+                    datasets: [{
+                        label: 'Amount',
+                        data: expenses['Amount'],
+                        
+                        hoverOffset: 17,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: { 
+                        legend: {
+                            labels: {
+                                color: 'aquamarine', 
+                                font: {
+                                    size: 17,
+                                    family:'Poiret One'
+                                }
+                            }
+                        }
+                    },
+                }
+                
+                });
+                new Chart(chart_savings, {
+                type: 'doughnut',
+                data: {
+                    labels: savings['Name'],
+                    datasets: [{
+                        label: 'Amount',
+                        data: savings['Amount'],
+                        
+                        
+                        hoverOffset: 17,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    
+                    plugins: { 
+                        legend: {
+                            labels: {
+                                color: 'aquamarine', 
+                                font: {
+                                    size: 17,
+                                    family:'Poiret One'
+                                }
+                            }
+                        }
+                    },
+                }
+                });
+                
+                
+                const skipped = (ctx, value) => ctx.p0.skip || ctx.p1.skip ? value : undefined;
+                const down = (ctx, value) => ctx.p0.parsed.y > ctx.p1.parsed.y ? value : undefined;
+                const genericOptions = {
+                    fill: false,
+                    interaction: {
+                      intersect: true
+                    },
+                    radius: 0,
+                };
+                var mystats={'stats_expenses':[],'stats_savings':[],'stats_labels':[]};
+                mystats['stats_expenses']=JSON.parse('{{ stats.Expenses|escapejs }}');
+                mystats['stats_savings']=JSON.parse('{{ stats.Savings|escapejs }}');
+                // mystats['stats_labels']=JSON.parse('{{ stats.Labels|escapejs }}');
+                function getMonthName(monthNumber) {
+                    const date = new Date();
+                    date.setMonth(monthNumber-1);
+                  
+                    return date.toLocaleString('en-US', { month: 'short' });
+                };
+                {% for label in stats.Labels %}
+                    mm=getMonthName(parseInt('{{label}}'))
+                    mystats['stats_labels'].push(mm + ' '+ '{{label}}'.split('-')[1]);
+                
+                {% endfor %}
+                {% comment %} {% for m in stats['MM-YYYY'] %}
+                    {% m=int(str({{m}}).split('-'))%}
+                    console.log('{{m}}');
+                    mystats['stats_expenses'].push({{stats['Expenses'][m]}})
+                {% endfor %} {% endcomment %}
+                console.log(mystats);
+
+
+                new Chart(chart_stats,{
+                type: 'bar',
+                data: {
+                    labels: mystats['stats_labels'],
+                    datasets: [
+                    {
+                        label: 'Expenses',
+                        data: mystats['stats_expenses'],
+                        backgroundColor:'rgba(190, 10, 56,0.4)',
+                    },
+                    {
+                        label: 'Savings',
+                        data: mystats['stats_savings'],
+                        backgroundColor:'rgb(96, 186, 114,0.6)',
+                       
+                    }
+                    ]
+                },
+                options: {
+                    
+                    plugins: { 
+                        legend: {
+                            labels: {
+                                color: 'white', 
+                                font: {
+                                    size: 17,
+                                    family:'Poiret One'
+                                }
+                            }
+                        }
+                    },
+                    scales:{
+                        y:{
+                            stacked:true
+                        },
+                        x:{
+                            stacked:true
+                        }
+
+                    }
+                }
+                });
+                
+                const chart_line=document.getElementById('analytics-chart-line')
+                new Chart(chart_line, {
+                type: 'line',
+                data: {
+                    labels: mystats['stats_labels'],
+                    datasets: [{
+                        label: 'Amount',
+                        data: mystats['stats_savings'],
+                        borderColor: 'rgb(75, 192, 192)',
+                        
+                        segment: {
+                        borderColor: ctx => skipped(ctx, 'rgb(0,0,0,0.2)') || down(ctx, 'rgb(192,75,75)'),
+                        borderDash: ctx => skipped(ctx, [6, 6]),
+                        },
+
+                        spanGaps: true,
+                        hoverOffset: 17,
+                        borderWidth: 1
+                    }]
+                },
+                options: genericOptions
+                });
+                
+            </script>
+        
+        
+        <a href="userinput">Input Data</a>
+    </div>
+    
+
+    <style>
+        .financial-container{
+            width: 100vw;
+            
+            
+            
+            background-image: url('/static/assets/rupee.jpg');
+            background-position: center;
+            background-size: cover;
+            padding: 2% 2%;
+           
+            
+        }
+        .financial-container a{
+            font-size: 1.5rem;
+            color: aquamarine;
+            text-align: center;
+            text-decoration: none;
+            border: 2px solid grey;
+            padding: 1%;
+            border-radius: 40px;
+            margin-left: 40%;
+            
+        }
+        .financial-container a:hover{
+            background-color:#695aa6; 
+            color: white;
+         
+        }
+        .data-charts{
+            width:100%;
+            align-items: center;
+            padding:0% 0.1%;
+            /* display: inline-block; */
+        
+           
+        }
+        .data-charts ul{
+            display: flex;
+            flex: 1;
+            
+            
+        }
+        .data-charts ul li{
+            width: 30%;
+            display: inline-block;
+            list-style: none;
+            margin: 0% 2%;
+        }
+        .financial-container h2{
+            font-size: 3rem;
+            color: aquamarine;
+            font-family: 'Cormorant SC',serif;
+            text-align: center;
+
+        }
+        .financial-container h3{
+            font-size: 2rem;
+            color: aquamarine;
+            text-align: center;
+            font-family: "Poiret One",serif;
+        }
+        .financial-container .target-box{
+            height:100%;
+            width: 100%;
+            
+            background-image: linear-gradient(180deg,rgb(27, 255, 160),rgb(38, 255, 251));
+            text-align: center;
+            
+            
+            
+            
+        }
+        .financial-container .target-box form{
+            padding: 2%;
+            margin-top: 10%;
+        }
+        .financial-container .target-box form #btn{
+            background-color: rgb(0, 0, 0);
+
+        }
+        .financial-container .target-box .goal-circle  h3{
+            font-size: 1.2rem;
+            font-weight: 300;
+            text-align: center;
+            font-family: "Cormorant SC",serif;
+            
+        
+            
+        }
+        .financial-container .target-box .goal-circle{
+            text-align: center;
+            margin: 0 30%;
+            height: 11vw;
+            width:11vw;
+            border-radius: 100%;
+            background-color: #4d4bbe;
+            color: aquamarine;
+            
+            box-shadow: 0px 1px 2px 0 #fffff2,1px 2px 4px 0 #fffff2,2px 4px 8px 0 #fffff2,4px 8px 16px 0 #fffff2;
+
+        }
+        .financial-container .target-box .goal-circle p{
+            color: white;
+            font-size: 0.5 rem;
+        }
+        .stats-div{
+            width: 100%;
+       
+        }
+        .stats-div ul{
+            display: flex;
+            flex: 1;
+            
+        }
+    
+        .stats-div ul li{
+            width:60%;
+            
+            list-style: none;
+            margin: 0 20%;
+
+        }
+        .financial-container .analytics {
+            width: 100%;
+        }
+        .financial-container .analytics ul{
+            display: flex;
+            flex: 1;
+        }
+        .financial-container .analytics ul li{
+            width: 47%;
+            border: 1px solid whitesmoke;
+            display: inline-block;
+            list-style: none;
+            margin: 0% 2%;
+        }
+        .financial-container .analytics ul li .data-insights-card{
+            color: white;
+            
+            width: 100%;
+            
+        }
+        .financial-container .analytics ul li .data-insights-card ul{
+            
+            display:block;
+
+        }
+        .financial-container .analytics ul li .data-insights-card ul li{
+          
+            color: aqua;
+            margin: 1% 0%;
+            width: 100%;
+            box-shadow: 0px 1px 2px 0 whitesmoke;
+        }
+        .financial-container .analytics ul li .data-insights-card ul li:hover{
+            box-shadow: 0px 2px 7px 2px whitesmoke;
+            
+        }
+        .financial-container .analytics .rectangle{
+            width:2vw;
+            height:2vw;
+            
+            margin:1% 1%;
+           
+            display:inline-block ;
+        
+
+        }
+        
+        .user-FCRecord{
+            margin: 5% 10%;
+        }
+    </style>
+
+
+</body>
+
+{% include 'footer.html' %}
