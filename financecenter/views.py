@@ -45,7 +45,7 @@ def user_dashboard(request):
     
     
     
-    response=requests.request(url="https://api.nytimes.com/svc/topstories/v2/business.json?api-key=okTUDhrhmLwJ3uCzvlMhGQDz1UsuBpXY",method='GET')
+    response=requests.request(url="https://api.nytimes.com/svc/topstories/v2/business.json?api-key=YourKey",method='GET')
     
     news=json.loads(response.text)
 
